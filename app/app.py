@@ -158,16 +158,3 @@ if btn_predict:
     st.markdown('### **Anos na empresa**')
     st.markdown("- Colaboradores com **4 e 5 anos de casa** deixaram a empresa.")
     st.markdown("- Colaboradores acima de **5 anos de casa** devem ser examinados.")
-
-
-
-
-# ##  Turnover V.S. YearsAtCompany 
-# ***
-# **Resumo:** Vamos ver mais alguns pontos para entender o porque os empregados deixam a empresa.
-#  - Empregados com **4 e 5 anos de casa** deixaram a empresa.
-#  - Empregados acima de **5 anos de casa** devem ser examinados.
- 
-# **Questões:**
-#   - Por que os Empregados estão saindo principalmente na faixa de 3-5 anos?
-#   - Quem são esses Empregados que saíram?
