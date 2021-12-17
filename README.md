@@ -39,8 +39,11 @@ Tecnologias/frameworks utilizados no projeto:
 
 ## Screen Shots
 
+### Projeto
+![overview](imgs/overview-solucao.png)
 
-
+### Aplicativo
+![app](imgs/app-solucao.png)
 
 ## Tutorial
 
@@ -51,7 +54,7 @@ Para simular um ambiente real de consulta em uma base de dados foi utilizado um 
 ```
 docker run --name mysqlbd -e MYSQL_ROOT_PASSWORD=stack -p "3307:3306" -d mysql
 ```
-utilize o arquivo ``data/employees_db.sql`` para dar carga de dados no mysql.
+foi utilizado o arquivo ``data/employees_db.sql`` para dar carga de dados no mysql.
 
 Para acessar o banco utilize:
 ```
@@ -62,7 +65,7 @@ Password: stack
 ```
 
 ### 2. Data Lake
-Para simular um ambiente para realizar o pipeline de dados foi utilizado o Minio Server.
+Para simular um ambiente de data lake e ter um pipeline de dados foi utilizado o Minio Server.
 
 obs: antes de executar o código crie uma pasta chamada ``datalake`` no diretório corrente.
 
@@ -80,7 +83,7 @@ Crie os buckets landing, processing e curated. Faça upload das pastas ``data/pe
 
 ### 3. Airflow
 
-O Airflow é um orquestrador de fluxos de tabalho. Com ele podemos programar, agendar e monitorar consultas de diversas fontes de dados, fazer tratamentos de forma simples através das DAGS (directed acyclic graphs) que em português significa: grafo acíclico dirigido. Na prática, podemos representar uma DAG com um script Python que tem operadores que irão executar em uma sequência definida.
+O Airflow é um orquestrador de fluxos de tabalho. Com ele podemos programar, agendar e monitorar consultas de diversas fontes de dados, fazer tratamentos de forma simples através das DAGS (directed acyclic graphs). Na prática, podemos representar uma DAG com um script Python que tem operadores que irão executar em uma sequência definida.
 
 obs: antes de executar o código crie a pasta ``airflow/dags``.
 
@@ -104,7 +107,7 @@ database_login = root
 database_password = stack
 database_name = employees
 ```
-Para saber o ip do container basta executar o código ``docker container inspect minio`` e buscar por ``IPAddress``
+Para saber o ip do container basta executar o código ``docker container inspect name_container`` e buscar por ``IPAddress``
 
 Execute o comando abaixo para se conectar ao container do airflow:
 
@@ -115,14 +118,22 @@ Instale as bibliotecas
 ``pip install pymysql xlrd openpyxl minio``
 
 ### 4. Container Python
+O container python é resposável pelo app do streamlit, para criar o container siga os seguintes passos:
 
+1. Crie uma imagem docker do python utilizando o comando
 
+```
+docker build -t python38 .
+```
+2. Inicie um container com a imagem criada
 ```
 docker run -d --rm --name python -p 8888:8888 -v "$PWD/:/home/project" python38
 ```
-
-Para o pyCaret funcionar corretamente instale o ``libgomp1`` utilizando o comando:
-
-````
-apt-get install libgomp1
-````
+3. Acesse o container utilizando
+```
+docker exec -it python bash
+```
+4. Instale as depedências do projeto
+```
+pip install -r requirements.txt
+```
